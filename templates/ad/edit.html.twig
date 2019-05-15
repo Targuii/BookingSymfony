@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'ad/_collections.html.twig' %}
+{% block body %}
+<div class="container">
+<h1>Modifier annonce</h1>
+
+{{ form_start(form) }}
+
+    {{ form_widget(form) }}
+    <button class="btn btn-info mb-5 mt-3" type="submit">Modifier cette annonce</button>
+
+
+{{ form_end(form) }}
+</div>
+
+{% endblock %}

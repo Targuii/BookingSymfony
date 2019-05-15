@@ -6,11 +6,11 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 // pour créer une page: 1- une fonction publique (classe) /  2- une route / 3- une réponse
 
-class HomeController extends Controller {
+class HomeController extends AbstractController {
 
     /**
      * Création de la premiere route
