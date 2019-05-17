@@ -1,7 +1,7 @@
 {% block _annonce_images_widget %}
     <p>ici vous pouvez ajouter des images supplémentaires</p>
     <input type="hidden" id="widget-count" value="0">
-    <button type="button" class="btn btn-primary btn-sm mb-2" id="add-image"> Ajouter une image</button>
+    <button type="button" class="btn btn-primary btn-sm mb-2" id="add-image"><i class="fas fa-plus"></i> Ajouter une image</button>
     {{ form_widget(form) }}
 {% endblock %}
 
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-md2 col-2">
-                <button type="button" class="btn btn-danger" data-action="delete" data-target="#bloc_{{id}}">X</button>
+                <button type="button" class="btn btn-danger btn-sm" data-action="delete" data-target="#bloc_{{id}}"><i class="far fa-times-circle"></i></button>
             </div>
     </div>
 

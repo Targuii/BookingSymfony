@@ -7,7 +7,15 @@
             <img src="{{ad.coverImage}}}" alt"{{ad.title}}" style="height: 200px; width: 100%; display: block;">
         </a>
             <p class="card-text">{{ad.introduction}}</p>
-            <a href="{{ url }}" class="btn btn-secondary btn-sm">+ d'infos</a>
+            <a href="{{ url }}" class="btn btn-warning btn-sm text-primary"><i class="fas fa-search-plus"></i> d'infos</a>
+            {% if app.user and app.user == ad.author %}
+            <span class="fa-stack ml-2" style="vertical-align: top;">
+                <a href="{{path('ads_edit',{'slug':ad.slug})}}">
+                    <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                    <i class="far fa-edit fa-stack-1x fa-inverse"></i>
+                </a>
+            </span>
+            {% endif %}
         </div>
         <div class="card-footer text-muted">
         <span>Pas encore noté</span>
