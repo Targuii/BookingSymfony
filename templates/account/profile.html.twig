@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+
+{% block body %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="offset-md-3 col-md-6">
+        <h4 class="ml-2">Modifiez votre profil.</h4>
+            <div class="jumbotron py3 px-3">
+{{ form_start(form) }}
+
+{{ form_widget(form) }}
+
+<button type="submit" class="btn btn-info">Enregistrer</button>
+<a href="{{path('account_home')}}" class="btn btn-primary ml-3">Retour</a>
+
+{{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

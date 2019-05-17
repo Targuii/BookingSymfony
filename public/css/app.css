@@ -12,3 +12,6 @@
     padding-right: 15px;
     padding-left: 15px;
   }
+
+  .avatar{width:128px;height:128px;border-radius: 50%;}
+  .avatar-sm{max-width: 32px;max-height: 32px;}
