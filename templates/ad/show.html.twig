@@ -9,7 +9,7 @@
         <h1>{{ad.title}}</h1>
         <p>{{ad.introduction}}</p>
         <p>{{ad.rooms}} chambres pour <strong>{{ad.price}} &euro; / jours</strong></p>
-        <button class="btn btn-info mb-2">Réserver</button>
+        <a href="{{path('booking_create',{'slug':ad.slug})}}" class="btn btn-info mb-2">Réserver</a>
         {% if app.user and app.user == ad.author %}
             <span class="fa-stack mb-2 ml-4" style="vertical-align: top;">
                 <a href="{{path('ads_edit',{'slug':ad.slug})}}">

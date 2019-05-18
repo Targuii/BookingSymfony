@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block body %}
+<main class="container text-center">
+    <i class="fas fa-map-signs fa-5x mt-5 mb-3 text-secondary"></i>
+    <h1 class="h2 text-secondary">Fausse route</h1>
+    <br>
+    <h2 class="h1 text-danger">Erreur 403</h2>
+    <h3 class="h4 text-danger">ACCES INTERDIT !</h3>
+    <h4 class="h6">{{exception.message}}</h4>
+<div class="text-center mt-5 mb-5">
+<a href="{{path('home')}}" class="btn btn-primary"><i class="fas fa-undo"></i> Retour a l'accueil</a>
+<a href="{{path('ads_list')}}" class="btn btn-info"><i class="far fa-compass"></i> Revenir aux annonces</a>
+</div>
+</main>
+{% endblock %}

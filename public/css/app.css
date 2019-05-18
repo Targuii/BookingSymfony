@@ -15,3 +15,5 @@
 
   .avatar{width:128px;height:128px;border-radius: 50%;}
   .avatar-sm{max-width: 32px;max-height: 32px;}
+
+  .datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {color:rgb(216, 75, 40)!important;text-decoration:line-through;}

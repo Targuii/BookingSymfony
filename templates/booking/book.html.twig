@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation!{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1 class="h4">Réservation pour : <br>
+       <small>{{ad.title}}</em></small>
+       <h6>Reservation aupés de <strong><em>{{ad.author.fullname}}</em></strong></h6> 
+       <a href="{{path('user_show',{'slug':ad.author.slug})}}"><small>Voir les autres annonces.</small></a>
+
+       {{form_start(form)}}
+       <div class="row mt-5">
+           <div class="col">
+                {{form_row(form.startDate)}}
+           </div>
+           <div class="col">
+                {{form_row(form.endDate)}}
+           </div>
+           <div class="col">
+                <h4>Montant du sejour : <span id="amount">...</span> &euro;</h4>
+                <span id="days">0</span> jour(s) à {{ad.price}} &euro; /jour
+           
+           </div>
+       </div>
+       <h5>Un commentaire ?</h5>
+       {{form_row(form.comment)}}
+       <button type="submit" class="btn btn-info mb-5"><i class="fas fa-hands-helping"></i> Réserver !</button>
+       <a href="{{path('ads_single',{'slug':ad.slug})}}" class="btn btn-primary mb-5"><i class="fas fa-undo"></i> Retour</a>
+       {{form_end(form)}}
+
+</div>
+{% endblock %}
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.fr.min.js"></script>
+<script>
+     $(document).ready(function(){
+
+          $('#booking_startDate,#booking_endDate').datepicker(
+               {format:'dd/mm/yyyy',
+               startDate: new Date(),
+               datesDisabled:[
+                    {% for day in ad.notAvailableDays %}
+                    "{{ day.format('d/m/Y') }}",
+                    {% endfor %}
+               ]
+
+
+               }
+          );
+          $('#booking_startDate,#booking_endDate').on('change',calculateAmount);
+     });
+     function calculateAmount(){
+          // on calcul l'intervale entre deux dates
+          const endDate = new Date($('#booking_endDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/,'$3-$2-$1'));
+
+          const startDate = new Date($('#booking_startDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/,'$3-$2-$1'));
+
+          // on compare les deux pour trouver le nombre de jours
+
+          if(startDate && endDate && startDate < endDate){
+
+
+          const dayTime= 24*60*60*1000;
+
+          const interval = endDate.getTime() - startDate.getTime();
+          const days = interval / dayTime;
+
+          // on multuplie l'intervale par le prix du bien
+          const amount = days * {{ad.price}};
+
+          // on insere les données dans la page
+
+          $('#days').text(days);
+          $('#amount').text(amount.toLocaleString('fr-FR'));
+
+          }
+     }
+</script>
+{% endblock %}
