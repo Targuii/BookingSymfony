@@ -5,7 +5,7 @@
 {% block body %}
 
     <main class="container">
-        <h1 class="h4">Réservation N° {{booking.id}}</h1>
+        <h1 class="h4 badge badge-info">Réservation : RES{{ 'now'|date('y')}}-{{ booking.id }}</h1>
         <h2 class="h6"><em><a href="{{path('ads_single',{'slug':booking.ad.slug})}}">{{booking.ad.title}}</a></em></h2>
 
         {% if app.request.query.get('alert') %}
@@ -18,50 +18,100 @@
         <div class="row">
             <div class="col">
                 <div class="alert alert-secondary">
-                <h3 class="h5 mt-3">Récapitulatif :</h3>
-                <dl class="row mt-3">
-                    <dt class="col-md-4">Numéro :</dt>
-                    <dd class="col-md-8">{{ booking.id }}</dd>
-                    <dt class="col-md-4">Date d'arrivée :</dt>
-                    <dd class="col-md-8">{{ booking.startDate | date('d/m/Y') }}</dd>
-                    <dt class="col-md-4">Date de départ :</dt>
-                    <dd class="col-md-8">{{ booking.endDate | date('d/m/Y') }}</dd>
-                    <dt class="col-md-4">Nombre de jours :</dt>
-                    <dd class="col-md-8">{{ booking.duration }}</dd>
-                    <dt class="col-md-4">Prix par jour :</dt>
-                    <dd class="col-md-8">{{ booking.ad.price }} &euro;</dd>
-                    <dt class="col-md-4">Montant total :</dt>
-                    <dd class="col-md-8">{{ booking.amount }} &euro;</dd>
-                    <dt class="col-md-4">Commentaire :</dt>
-                    <dd class="col-md-8">{{ booking.comment }}</dd>
-                </dl>
-                <hr>
-                <h3 class="h5 alert-heading">Propriétaire du bien :</h3>
-                <div class="row">
-                        <div class="col-md-3">
-                            <img src="{{booking.ad.author.avatar}}" alt="avatar de {{booking.ad.author.fullName}}" class="img-thumbnail">
+                    <h3 class="h5 mt-3 text-dark">Récapitulatif :</h3>
+                    <dl class="row mt-3">
+                        <dt class="col-md-4">Référence :</dt>
+                        <dd class="col-md-8">RES{{ 'now'|date('y')}}-{{ booking.id }}</dd>
+                        <dt class="col-md-4">Date d'arrivée :</dt>
+                        <dd class="col-md-8">{{ booking.startDate | date('d/m/Y') }}</dd>
+                        <dt class="col-md-4">Date de départ :</dt>
+                        <dd class="col-md-8">{{ booking.endDate | date('d/m/Y') }}</dd>
+                        <dt class="col-md-4">Nombre de jours :</dt>
+                        <dd class="col-md-8">{{ booking.duration }}</dd>
+                        <dt class="col-md-4">Prix par jour :</dt>
+                        <dd class="col-md-8">{{ booking.ad.price }} &euro;</dd>
+                        <dt class="col-md-4">Montant total :</dt>
+                        <dd class="col-md-8">{{ booking.amount }} &euro;</dd>
+                        <dt class="col-md-4">Commentaire :</dt>
+                        <dd class="col-md-8">{{ booking.comment | default('aucun commentaire')}}</dd>
+                    </dl>
+                    <hr>
+                    <h3 class="alert-heading h6 text-info"><i class="far fa-comment-alt"></i> Votre avis nous interesse !</h3>
+                    
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#global-rating">Evaluations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#your-rating">Votre Avis</a>
+                            </li>
+                        </ul>
+                        <div id="myTabRaiting" class="tab-content">
+                            <div class="tab-pane fade active show mt-3" id="global-rating">
+                            {% if booking.ad.comments|length >0 %}
+                            <p>Score de cette annonce :
+                                {% include 'inc/rating.html.twig' with {'rating':booking.ad.averageRatings}%}</p>
+                            <small class="text-rating"><em>moyenne calculée sur {{booking.ad.comments|length}} avis.</em></small><br>
+                            {% else %}
+                            <p>Cette annonce n'a pas encore été évaluée</p>
+                            {% endif %}
+                            </div>
+                            <div class="tab-pane fade mt-3" id="your-rating">
+                                {% if date() > date(booking.endDate) %}
+                                    {% set comment = booking.ad.commentFromAuthor(app.user) %}
+                                    {% if comment is not null %}
+                                    <blockquote>{{comment.content}}</blockquote>
+                                    <p>Votre note: {% include 'inc/rating.html.twig' with {'rating':comment.rating}%}</p>
+                                    {% else %}
+                                    {{form_start(form)}}
+                                    {{form_widget(form)}}
+                                    <button class="btn btn-outline-info btn-sm" type="submit">Laissez une évaluation</button>
+                                    {{form_end(form)}}
+                                    {% endif %}
+                                {% else %}
+                                    <p class="text-muted">Vous pourrez évaluer cette annonceur à la fin de votre séjour</p>
+                                {% endif %}
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <h4 class="h6">
-                            <a href="{{path('user_show',{'slug':booking.ad.author.slug})}}">{{booking.ad.author.fullName}}</a>
-                            </h4>
-                            <span class="badge badge-info">{{booking.ad.author.ads|length}}{% if booking.ad.author.ads|length > 1 %} annonces{% else %} annonce{% endif %}</span>
-                        </div>
-                    <div class="px-3 mt-3">
-                    {{booking.ad.author.description|raw}}
-                    </div>
-                </div>
+                    
                 </div>
             </div>
             <div class="col">
-                <div class="alert alert-secondary">
-                <h3 class="h5 alert-heading mt-3">Votre Hébergement :</h3>    
-                    <h4 class="h5 mt-3"><a href="{{path('ads_single',{'slug':booking.ad.slug})}}">{{booking.ad.title|upper}}</a></h4>
-                    <img src="{{booking.ad.coverImage}}" alt="Image de couverture de {{booking.ad.title}}" class="img-fluid mb-3">
-                    {{booking.ad.content|raw}}
-                    <a href="{{path('ads_single',{'slug':booking.ad.slug})}}" class="btn btn-outline-info btn-sm ml-3">détails</a>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#booking">Votre Location</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#author">Le Propriétaire</a>
+                        </li>
+                    </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active show" id="booking">  
+                        <h4 class="h5 mt-3"><a href="{{path('ads_single',{'slug':booking.ad.slug})}}">{{booking.ad.title|upper}}</a></h4>
+                        <img src="{{booking.ad.coverImage}}" alt="Image de couverture de {{booking.ad.title}}" class="img-fluid mb-3">
+                        {{booking.ad.content|raw}}
+                        <a href="{{path('ads_single',{'slug':booking.ad.slug})}}" class="btn btn-outline-info btn-sm mb-3">détails</a>
+                    </div>
+                    <div class="tab-pane fade" id="author">
+                    <div class="row">
+                            <div class="col-md-3 mt-3">
+                                <img src="{{booking.ad.author.avatar}}" alt="avatar de {{booking.ad.author.fullName}}" class="img-thumbnail">
+                            </div>
+                            <div class="col-md-9 mt-3">
+                                <h4 class="h6">
+                                <a href="{{path('user_show',{'slug':booking.ad.author.slug})}}">{{booking.ad.author.fullName}}</a>
+                                </h4>
+                                <span class="badge badge-info">{{booking.ad.author.ads|length}}{% if booking.ad.author.ads|length > 1 %} annonces{% else %} annonce{% endif %}</span>
+                            </div>
+                        <div class="px-3 mt-3">
+                        {{booking.ad.author.description|raw}}
+                        <a href="{{path('user_show',{'slug':booking.ad.author.slug})}}" class="btn btn-outline-info btn-sm mb-3">Voir sa page</a>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="alert alert-secondary">
+                    </div>
                 </div>
-            </div>
         </div>
     </main>
 

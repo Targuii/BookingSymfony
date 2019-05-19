@@ -3,9 +3,7 @@
 {% block body %}
 
 <div id="ad-title" style="background-image:url({{ad.coverImage}})">
-
     <div class="container mb-5">
-
         <h1>{{ad.title}}</h1>
         <p>{{ad.introduction}}</p>
         <p>{{ad.rooms}} chambres pour <strong>{{ad.price}} &euro; / jours</strong></p>
@@ -25,14 +23,12 @@
             </span>
         {% endif %}
     </div>
-
 </div>
 <div class="container">
     <div class="row">
         <div class="col-md-8 mb-3">
             {{ad.content|raw}}
-
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
                 <ol class="carousel-indicators">
                     {% for image in ad.images %}
                         <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index0}}" class="{% if loop.first%}active{% endif %}"></li>
@@ -49,7 +45,6 @@
                         </div>
                     {% endfor %}
                 </div>
-
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -59,6 +54,39 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
+            <hr>
+            {% if ad.comments|length >0 %}
+                <h4 class="ml-3">Avis des voyageurs</h4>
+                <div class="alert alert-info">
+                
+                    <h4 class="alert-heading h5">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                            Note globale donnée par les voyageurs :<br>
+                            <small class="text-rating"><em>moyenne calculée sur {{ad.comments|length}} avis.</em></small>
+                            </div>
+                            <div class="col-4">
+                                {% include 'inc/rating.html.twig' with {'rating':ad.averageRatings}%}
+                            </div>
+                        </div>
+                    
+                    </h4>
+                
+                </div>
+                {% for comment in ad.comments %}
+                    <div class="alert alert-light">
+                        <blockquote class="blockquote">
+                        <footer class="blockquote-footer">Ecrit par : <cite title="Source Title">{{comment.author.fullname}}</cite></footer>
+                        {{comment.content}}
+                        </blockquote>
+                        <p>Note :
+                        {% include 'inc/rating.html.twig'with {'rating' : comment.rating } %}
+                        </p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <small class="text-muted">Cette annonce n'a pas encore d'avis</small>
+            {% endif %}
         </div>
         <div class="col">
         {% set a = ad.author %}
@@ -81,7 +109,4 @@
         </div>
     </div>
 </div>
-
-
-
 {% endblock %}

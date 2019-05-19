@@ -1,13 +1,13 @@
 {% set url= path('ads_single',{'slug':ad.slug}) %}
 <div class="col-md-4">
-    <div class="card bg-light mb-3">
+    <div class="card border-secondary mb-3">
         <div class="card-header"><h4 class="card-title">{{ad.rooms}} chambres {{ad.price}} &euro;/jour</h4></div>
         <div class="card-body">
         <a href="{{ url }}">
             <img src="{{ad.coverImage}}}" alt"{{ad.title}}" style="height: 200px; width: 100%; display: block;">
         </a>
             <p class="card-text">{{ad.introduction}}</p>
-            <a href="{{ url }}" class="btn btn-warning btn-sm text-primary"><i class="fas fa-search-plus"></i> d'infos</a>
+            <a href="{{ url }}" class="btn btn-secondary btn-sm"><i class="fas fa-search-plus"></i> d'infos</a>
             {% if app.user and app.user == ad.author %}
             <span class="fa-stack ml-2" style="vertical-align: top;">
                 <a href="{{path('ads_edit',{'slug':ad.slug})}}">
@@ -17,8 +17,12 @@
             </span>
             {% endif %}
         </div>
-        <div class="card-footer text-muted">
-        <span>Pas encore noté</span>
+        <div class="card-footer text-muted text-center">
+        {% if ad.comments|length > 0 %}
+            {% include 'inc/rating.html.twig' with {'rating':ad.averageRatings} %} sur {{ad.comments|length}} avis.
+        {% else %}
+            <span>Pas encore noté</span>
+        {% endif %}
         </div>
     </div>
 </div>
