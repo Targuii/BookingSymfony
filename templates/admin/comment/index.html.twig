@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion des commentaires{% endblock %}
+
+{% block body %}
+<main class="container-fluid">
+    <h1 class="my-5 h4 pl-3"><i class="fas fa-code"></i> Gestion des commentaires</h1>
+    <div class="row mx-3">
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-active">
+                    <th scope="col">Id</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Auteur</th>
+                    <th scope="col">Commentaire</th>
+                    <th scope="col">Note</th>
+                    <th scope="col">Annonce</th>
+                    <th scope="col" class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comment in comments %}
+                    <tr>
+                        <th scope="row">{{comment.id}}</td>
+                        <td>{{comment.createdAt|date('d/m/Y H:i')}}</td>
+                        <td class="text-primary"><a href="{{path('user_show',{'slug':comment.author.slug})}}" style="text-decoration:none;" target="_blank">
+                        <img src="{{comment.author.avatar}}" alt="{{comment.author.fullName}}" class="avatar-sm mr-2"> 
+                        {{comment.author.fullName}}</a></td>
+                        <td>{{comment.content}}</td>
+                        <td><span class="badge badge-warning badge-pill">{{comment.rating}}</span></td>
+                        <td><strong><em>{{comment.ad.title}}</em></strong></td>
+                        <td class="text-right">
+                        <a href="{{path('admin_comment_edit',{'id':comment.id})}}" class="text-dark mr-2"><i class="fas fa-pencil-alt"></i></a>
+                        <a href="{{path('admin_comment_delete',{'id':comment.id})}}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

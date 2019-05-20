@@ -1,0 +1,90 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modification Annonce{% endblock %}
+
+{% block body %}
+<main class="container-fluid">
+    <h1 class="h4 text-center my-5"><i class="far fa-edit"></i> Modification de l'annonce<br>
+        <small class="text-primary"><i class="fas fa-angle-double-left"></i> {{ad.title}} <i class="fas fa-angle-double-right"></i></small>
+    </h1>
+    <section class="col-md-8 offset-md-2">
+        {{form_start(form)}}
+        <div class="row">
+            <div class="col">
+                <div class="card border-light mb-3">
+                    <div class="card-header">
+                        <h4 class="h5 card-title">Annonce</h4>
+                    </div>
+                    <div class="card-body">               
+                        {{form_widget(form)}}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-outline-info btn-sm"><i class="fas fa-check"></i> Enregistrer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-light mb-3">
+                    <div class="card-header">
+                    <h4 class="h5 card-title">Réservations</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="table-active">
+                                    <th scope="col" class="text-left">Id</th>
+                                    <th class="text-center">Voyageur</th>
+                                    <th class="text-center">Date de réservation</th>
+                                    <th class="text-right"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for booking in ad.bookings %}
+                                <tr>
+                                    <th scope="row" class="text-left"><span class="badge badge-dark">{{booking.Id}}</span></td>
+                                    <td class="text-center">{{booking.booker.fullName}}</td>
+                                    <td class="text-center">{{booking.createdAt|date('d/m/Y')}}</td>
+                                    <td class="text-right"><a href="{{path('admin_booking_edit',{'id':booking.id})}}" class="btn btn-outline-primary btn-sm"><i class="fas fa-pen"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card border-light mb-3">
+                    <div class="card-header">
+                    <h4 class="h5 card-title">Commentaires</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="table-active">
+                                    <th scope="col" class="text-left">Id</th>
+                                    <th class="text-center">Voyageur</th>
+                                    <th class="text-center">Note</th>
+                                    <th>Commentaires</th>
+                                    <th class="text-right"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for comment in ad.comments %}
+                                <tr>
+                                    <th scope="row" class="text-left"><span class="badge badge-dark">{{comment.Id}}</span></td>
+                                    <td class="text-center">{{comment.author.fullName}}</td>
+                                    <td class="text-center"><span class="badge badge-pill badge-warning">{{comment.rating}}</span></td>
+                                    <td>{{comment.content}}</td>
+                                    <td class="text-right"><a href="{{path('admin_comment_edit',{'id':comment.id})}}" class="btn btn-outline-primary btn-sm"><i class="fas fa-pen"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        {{form_end(form)}}
+    </section>
+</main>
+
+{% endblock %}

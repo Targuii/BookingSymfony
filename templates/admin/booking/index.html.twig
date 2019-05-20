@@ -1,0 +1,41 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier un commentaire{% endblock %}
+
+{% block body %}
+<main class="container-fluid px-5">
+    <h1 class="my-5 h4 pl-3"><i class="fas fa-code"></i> Gestion des réservations</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr class="table-active">
+            <th scope="col">Id</th>
+            <th scope="col">Date</th>
+            <th scope="col">Voyageur</th>
+            <th scope="col">Annonce</th>
+            <th scope="col">Date début</th>
+            <th scope="col">Date fin</th>
+            <th scope="col">Prix</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <th scope="row">{{booking.id}}</td>
+            <td class="text-success">{{booking.createdAt|date('d/m/Y')}}</td>
+            <td class="text-primary">{{booking.booker.fullName}}</td>
+            <td><h6>{{booking.ad.title}}</h6></td>
+            <td class="text-dark">{{booking.startDate|date('d/m/Y')}}</td>
+            <td class="text-dark">{{booking.endDate|date('d/m/Y')}}</td>
+            <td><h6><span class="badge badge-light text-dark">{{booking.amount}} &euro;</span></h6></td>
+            <td class="text-right">
+            <a href="{{path('admin_booking_edit',{'id':booking.id})}}" class="text-dark mr-2"><i class="fas fa-pencil-alt"></i></a>
+            <a href="{{path('admin_booking_delete',{'id':booking.id})}}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</main>
+{% endblock %}

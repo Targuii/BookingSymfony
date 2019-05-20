@@ -1,0 +1,25 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier un commentaire{% endblock %}
+
+{% block body %}
+<main class="container-fluid">
+    <h1 class="my-5 h4 pl-3"><i class="fas fa-code"></i> Modification du commentaire n° {{comments.id}}</h1>
+
+        <div class="row mt-5">
+            <div class="col-8 offset-2 px-3 alert alert-info">
+                <p><strong>Annonce liée :</strong> {{comments.ad.title}}</p>
+                <p><strong>Auteur :</strong> {{comments.ad.author.fullName}}</p>
+                <p><strong>Date de création :</strong> {{comments.createdAt|date('d/m/Y H:i')}}</p>
+                <p><strong>Note donnée :</strong> {% include 'inc/rating.html.twig' with {'rating':comments.rating}%}</p>
+            </div>
+            <div class="col-8 offset-2 px5">
+                {{form_start(form)}}
+                {{form_widget(form)}}
+                <button class="btn btn-outline-info btn-sm mb-5" type="submit"><i class="fas fa-check"></i> Enregistrer</button>
+                <a href="javascript:history.go(-1)"{# "{{path('admin_comments_list')}}" #} class="btn btn-link btn-sm ml-3 mb-5"><i class="fas fa-undo"></i> Retour</a>
+                {{form_end(form)}}
+            </div>
+        </div>
+</main>
+{% endblock %}
