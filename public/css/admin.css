@@ -6,6 +6,7 @@
 
   .avatar{width:128px;height:128px;border-radius: 50%;}
   .avatar-sm{max-width: 32px;max-height: 32px;}
+  .avatar-list{max-width: 32px;max-height: 32px;;border-radius: 10%;box-shadow: 2px 2px 3px 1px rgba(28, 28, 29, 0.2);}
 
   .datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {color:rgb(216, 75, 40)!important;text-decoration:line-through;}
 
