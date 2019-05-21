@@ -4,6 +4,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
+use App\Form\ContactType;
 use App\Repository\AdRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +24,7 @@ class HomeController extends AbstractController {
     public function home(AdRepository $adRepo,UserRepository $userRepo){
 
         return $this -> render('home.html.twig',
-                                ['ads'=>$adRepo->findBestAds(3),
+                                ['ads'=>$adRepo->findBestAds(6),
                                 'users'=>$userRepo->findBestUsers()
 
 
@@ -42,4 +44,5 @@ class HomeController extends AbstractController {
 
         return $this->render('hello.html.twig',['title'=>'Page de profil','nom'=>$nom,'acces'=>$acces]);
     }
+
 }
