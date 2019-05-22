@@ -22,7 +22,7 @@ class AdController extends AbstractController
     public function index(AdRepository $repo,$page,Pagination $paginationService){
 
         $paginationService->setEntityClass(Ad::class)
-                          ->setLimit(9)
+                          ->setLimit(6)
                           ->setPage($page)
                           ;
         
