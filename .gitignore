@@ -6,10 +6,9 @@
 /public/bundles/
 /var/
 /vendor/
-/src/DataFixtures/
+
 ###< symfony/framework-bundle ###
-/.DS_Store
-/.env
+
 ###> symfony/phpunit-bridge ###
 .phpunit
 /phpunit.xml
