@@ -25,3 +25,12 @@
 
   .rating{color: goldenrod;font-size: 0.8em;}
   .text-rating{font-size: 70%}
+
+  .page-link{color: black;}
+
+  .page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: rgb(27, 28, 29);
+    border-color: rgb(27, 28, 29);
+}
