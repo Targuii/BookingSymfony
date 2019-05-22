@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdController extends AbstractController
 {
     /**
-     * permet d'afficher une liste d'annonce.
+     * permet d'afficher une liste d'annonce. avec pagination
      * @Route("/ads/{page<\d+>?1}", name="ads_list")
      */
     public function index(AdRepository $repo,$page,Pagination $paginationService){
