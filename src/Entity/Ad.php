@@ -3,17 +3,21 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(fields={"title"},message="Une autre annonce possede déjà le meme titre")
+ * @Vich\Uploadable()
  */
 class Ad
 {
@@ -23,6 +27,7 @@ class Ad
      * @ORM\Column(type="integer")
      */
     private $id;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -53,7 +58,15 @@ class Ad
     private $content;
 
     /**
+     * @Vich\UploadableField(mapping="ads_image",fileNameProperty="coverImage")
+     * @Assert\Image(mimeTypes="image/jpeg")
+     * @var File|null
+     */
+    private $imageFile;
+
+    /**
      * @ORM\Column(type="string", length=255)
+     * @var string|null
      */
     private $coverImage;
 
@@ -82,6 +95,27 @@ class Ad
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="ad", orphanRemoval=true)
      */
     private $comments;
+
+    /**
+     * @ORM\Column(type="datetime",)
+     *
+     */
+    private $updated_at;
+
+
+    /**
+     * Création automatique d'une date pour l'image CoverImage
+     * @ORM\PrePersist
+     *
+     * @return void
+     */
+    public function prePersist(){
+
+        if(empty($this->updated_at)){
+            $this->created_at = new \DateTime();
+        }
+    }
+
 
     public function __construct()
     {
@@ -221,14 +255,44 @@ class Ad
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCoverImage(): ?string
     {
         return $this->coverImage;
     }
 
-    public function setCoverImage(string $coverImage): self
+    /**
+     * @param null|string $coverImage
+     * @return Ad
+     */
+    public function setCoverImage(?string $coverImage): Ad
     {
         $this->coverImage = $coverImage;
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?file
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File $imageFile
+     * @return Ad
+     * @throws \Exception
+     */
+    public function setImageFile(file $imageFile): Ad
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile){
+            $this->updated_at = new \Datetime('now');
+        }
 
         return $this;
     }
@@ -346,6 +410,18 @@ class Ad
                 $comment->setAd(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }

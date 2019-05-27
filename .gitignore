@@ -6,6 +6,9 @@
 /public/bundles/
 /var/
 /vendor/
+/.DS_STORE
+/.idea/
+/public/.DS_STORE
 
 ###< symfony/framework-bundle ###
 
@@ -17,3 +20,7 @@
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###

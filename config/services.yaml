@@ -29,3 +29,7 @@ services:
     App\Service\Pagination:
         arguments:
             $templatePath: 'admin/inc/pagination.html.twig'
+
+    App\Listener\ImageCacheSubscriber:
+        tags:
+         - { name: doctrine.event_subscriber }

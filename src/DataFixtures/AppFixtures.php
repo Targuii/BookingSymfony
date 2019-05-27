@@ -75,6 +75,7 @@ class AppFixtures extends Fixture
                 ->setPrice(mt_rand(30,200))
                 ->setRooms(mt_rand(1,6))
                 ->setAuthor($user)
+                ->setUpdated_at(new \DateTime())
                 ;
             $manager->persist($ad);
             for($j=1;$j<=mt_rand(2,5);$j++){

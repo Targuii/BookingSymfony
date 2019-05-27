@@ -26,6 +26,9 @@ function deleteButtons(){
         $(target).remove();
     });
 }
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
 
 updateCounter();
 deleteButtons();

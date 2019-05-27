@@ -26,10 +26,10 @@ class AnnonceType extends ApplicationType
             ->add('slug',TextType::class,$this->getConfiguration('Alias (Facultatif)','Personalisez un alias pour générer l\'url',['required'=>false]))
             ->add('price',MoneyType::class,$this->getConfiguration('Prix','Prix par jour'))
             ->add('rooms',IntegerType::class,$this->getConfiguration('Nombre de chambre','Nombres de chambre'))
-            ->add('coverImage',UrlType::class,$this->getConfiguration('Image de couverture','Inserez une image'))
+            ->add('imageFile',FileType::class,$this->getConfiguration('Image de couverture','Inserez une image',['data_class' => null]))
             ->add('introduction',TextType::class,$this->getConfiguration('Résumé','Résumez votre bien'))
             ->add('content',TextareaType::class,$this->getConfiguration('Description détaillée','Décrivez vos services'))
-            ->add('images',CollectionType::class,['entry_type'=>ImageType::class,'allow_add'=>true,'allow_delete'=>true])
+            ->add('images',CollectionType::class,['entry_type'=>ImageType::class,'allow_add'=>true,'allow_delete'=>true,'data_class' => null])
             // ->add('save',SubmitType::class,['label'=>'Enregistrez votre annonce','attr'=>['class'=>'btn btn-info']])
         ;
     }

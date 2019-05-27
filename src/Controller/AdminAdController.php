@@ -6,6 +6,7 @@ use App\Entity\Ad;
 use App\Form\AnnonceType;
 use App\Service\Pagination;
 use App\Repository\AdRepository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,8 +44,8 @@ class AdminAdController extends AbstractController
     public function edit(Ad $ad,Request $request,ObjectManager $manager){
         
         $form = $this->createForm(AnnonceType::class,$ad);
-
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()){
 
             $manager->persist($ad);

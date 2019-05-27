@@ -2,7 +2,7 @@
 {% block title %}{{ad.title}}{% endblock %}
 {% block body %}
 
-<div id="ad-title" style="background-image:url({{ad.coverImage}})">
+<div id="ad-title" style="background-image:url({{vich_uploader_asset(ad,'imageFile')}})">
     <div class="container mb-5">
         <h1>{{ad.title}}</h1>
         <p>{{ad.introduction}}</p>
