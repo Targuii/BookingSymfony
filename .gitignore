@@ -9,7 +9,7 @@
 /.DS_STORE
 /.idea/
 /public/.DS_STORE
-/public/
+/public/img
 
 ###< symfony/framework-bundle ###
 
