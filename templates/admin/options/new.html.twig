@@ -1,0 +1,15 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}New Options{% endblock %}
+
+{% block body %}
+<main class="container-fluid px-5 mb-5">
+    <h1 class="my-5 h4 pl-3"><i class="fas fa-code"></i> Gestions des annonces</h1>
+    <div class="row mx-3">
+
+    {{ include('admin/options/_form.html.twig') }}
+
+
+    </div>
+</main>
+{% endblock %}

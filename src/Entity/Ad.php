@@ -102,6 +102,11 @@ class Ad
      */
     private $updated_at;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Options", inversedBy="ads")
+     */
+    private $options;
+
 
     /**
      * Création automatique d'une date pour l'image CoverImage
@@ -122,6 +127,7 @@ class Ad
         $this->images = new ArrayCollection();
         $this->bookings = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->options = new ArrayCollection();
     }
 
     /**
@@ -422,6 +428,34 @@ class Ad
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Options[]
+     */
+    public function getOptions(): Collection
+    {
+        return $this->options;
+    }
+
+    public function addOption(Options $option): self
+    {
+        if (!$this->options->contains($option)) {
+            $this->options[] = $option;
+            $option->addAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOption(Options $option): self
+    {
+        if ($this->options->contains($option)) {
+            $this->options->removeElement($option);
+            $option->removeAd($this);
+        }
 
         return $this;
     }

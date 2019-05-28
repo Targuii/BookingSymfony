@@ -106,6 +106,18 @@
             <div class="col py-3">
             {{ a.introduction | raw }}
             </div>
+            {% if ad.options|length > 0 %}
+            <div class="col py-3">
+                <ul class="list-group">
+                    <h6>Les plus :</h6>
+                    <ul class="list-group">
+                        {% for key, option in ad.options %}
+                            <li class="list-group-item {{ key%2 == 0 ? 'list-group-item-info':'' }}">{{ option.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </ul>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
