@@ -9,8 +9,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{path('admin_dashboard')}}"><i class="fas fa-chart-line"></i> Tabeau de bord</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{path('admin_ads_list')}}"><i class="fas fa-hotel"></i> Annonces</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-hotel"></i> Annonces</a>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="{{path('admin_ads_list')}}">Les Annonces</a>
+                                <a class="dropdown-item" href="{{path('options_index')}}">Les Options</a>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{path('admin_bookings_list')}}"><i class="fas fa-folder"></i> Réservation</a>

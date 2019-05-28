@@ -19,5 +19,5 @@ Projet Symfony:
 
 ToDo: 
 - Mise en place d'un système de paiement.
-- Gestion d'un système d'options
+- ~~Gestion d'un système d'options~~
 - ~~Page de contact~~
