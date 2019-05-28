@@ -31,18 +31,4 @@ class HomeController extends AbstractController {
                                 ]);
     }
 
-    /**
-     * Création du route paramétrée
-     * Route de la page pour saluer l'utilisateur
-     * @Route("/profil/{nom}", name="hello-utilisateur")
-     * @Route("/hello", name="hello-base")
-     * @Route("/profil/{nom}/acces/{acces}",name="hello-profil")
-     * @return void
-     */
-
-    public function hello($nom="anonyme",$acces="visiteur"){
-
-        return $this->render('hello.html.twig',['title'=>'Page de profil','nom'=>$nom,'acces'=>$acces]);
-    }
-
 }
